@@ -1,3 +1,9 @@
 vendor/
 *.cache
 composer.lock
+
+phpstan.neon
+rector.php
+.php-cs-fixer.php
+utils/
+build/
