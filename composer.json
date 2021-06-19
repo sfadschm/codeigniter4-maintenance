@@ -1,0 +1,28 @@
+{
+    "name": "aschm/maintenance",
+    "type": "library",
+    "description": "Admin dashboard maintenance mode handling for CodeIgniter 4.",
+    "keywords": [
+        "codeigniter",
+        "maintenance",
+    ],
+    "homepage": "https://github.com/sfadschm/maintenance",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Schmitz",
+            "email": "schmitz.alex@gmx.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8.0"
+        "myth/auth": "dev-develop",
+    },
+    "autoload": {
+        "psr-4": {
+            "ASchm\\Maintenance\\": "src"
+        },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+}
