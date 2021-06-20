@@ -29,7 +29,11 @@
     },
     "autoload": {
         "psr-4": {
-            "ASchm\\Maintenance\\": "src",
+            "ASchm\\Maintenance\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Utils\\": "utils"
         }
     },
