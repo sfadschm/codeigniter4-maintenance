@@ -59,7 +59,7 @@ class MaintenanceController extends Controller
         $config = config('Maintenance');
 
         // Continue if maintenance file does not exist
-        if (!file_exists($config->filePath)) {
+        if (! file_exists($config->filePath)) {
             return true;
         }
 
@@ -133,15 +133,17 @@ class MaintenanceController extends Controller
 
         // Create directory if not exist
         $dir = dirname($config->filePath);
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             mkdir($dir);
         }
 
         // Write the maintenance file
-        file_put_contents($config->filePath, json_encode(
-                        ["time" => strtotime(Time::now(app_timezone())), "allowed_groups" => $allowedGroups],
-                        JSON_PRETTY_PRINT
-                )
+        file_put_contents(
+            $config->filePath,
+            json_encode(
+                ["time" => strtotime(Time::now(app_timezone())), "allowed_groups" => $allowedGroups],
+                JSON_PRETTY_PRINT
+            )
         );
     }
 }

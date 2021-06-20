@@ -25,8 +25,8 @@ $status = MaintenanceController::status();
 				<div class="table-cell">
 					<?=
                             Time::createFromTimestamp($status['time'])
-                            ->setTimezone(app_timezone())
-                            ->toLocalizedString('dd.MM.yyyy, HH:mm:ss')
+                                ->setTimezone(app_timezone())
+                                ->toLocalizedString('dd.MM.yyyy, HH:mm:ss')
                     ?>
 				</div>
 			</div>
@@ -45,13 +45,13 @@ $status = MaintenanceController::status();
 		<div class="table-cell buttons">
 			<?=
             form_button(
-                    [
-                        'type'    => 'submit',
-                        'name'    => 'action',
-                        'value'   => $status['offline'] ? 'up' : 'down',
-                        'content' => $status['offline'] ? lang('Maintenance.buttons.up') : lang('Maintenance.buttons.down'),
-                        'class'   => '',
-                    ]
+                [
+                    'type'    => 'submit',
+                    'name'    => 'action',
+                    'value'   => $status['offline'] ? 'up' : 'down',
+                    'content' => $status['offline'] ? lang('Maintenance.buttons.up') : lang('Maintenance.buttons.down'),
+                    'class'   => '',
+                ]
             )
             ?>
 		</div>
