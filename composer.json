@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Utils\\": "utils"
+            "Utils\\": "../CodeIgniter4/utils"
         }
     },
     "minimum-stability": "dev",
