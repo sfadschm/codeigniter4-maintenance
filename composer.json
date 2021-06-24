@@ -20,7 +20,7 @@
         "myth/auth": "dev-develop"
     },
     "require-dev": {
-        "codeigniter4/framework": "^4.0",
+        "codeigniter4/codeigniter4": "dev-develop",
         "friendsofphp/php-cs-fixer": "^3.0",
         "nexusphp/cs-config": "^3.1",
         "phpstan/phpstan": "0.12.88",
@@ -32,11 +32,12 @@
             "ASchm\\Maintenance\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Utils\\": "../CodeIgniter4/utils"
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/codeigniter4/CodeIgniter4"
         }
-    },
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
