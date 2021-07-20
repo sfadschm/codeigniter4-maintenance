@@ -1,0 +1,23 @@
+parameters:
+	tmpDir: build/phpstan
+	level: 8
+	paths:
+		- src
+	treatPhpDocTypesAsCertain: false
+	bootstrapFiles:
+		- vendor/codeigniter4/codeigniter4/system/Test/bootstrap.php
+	ignoreErrors:
+	universalObjectCratesClasses:
+		- CodeIgniter\Entity\Entity
+		- CodeIgniter\Model
+		- Faker\Generator
+	parallel:
+		processTimeout: 300.0
+	scanDirectories:
+		- vendor/codeigniter4/codeigniter4/system/Helpers
+		- vendor/myth/auth/src/Helpers
+	dynamicConstantNames:
+		- APP_NAMESPACE
+		- CI_DEBUG
+		- ENVIRONMENT
+		- SODIUM_LIBRARY_VERSION

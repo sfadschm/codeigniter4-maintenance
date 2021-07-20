@@ -4,6 +4,7 @@
     "description": "Admin dashboard maintenance mode handling for CodeIgniter 4.",
     "keywords": [
         "codeigniter",
+        "codeigniter4",
         "maintenance"
     ],
     "homepage": "https://github.com/sfadschm/maintenance",
@@ -17,19 +18,26 @@
     ],
     "require": {
         "php": "^7.3 || ^8.0",
-        "myth/auth": "dev-develop"
+        "codeigniter4/authentication-implementation": "^1.0"
     },
     "require-dev": {
         "codeigniter4/codeigniter4": "dev-develop",
+        "myth/auth": "dev-develop",
         "friendsofphp/php-cs-fixer": "^3.0",
         "nexusphp/cs-config": "^3.1",
-        "phpstan/phpstan": "0.12.88",
-        "rector/rector": "0.11.14",
+        "phpstan/phpstan": "0.12.91",
+        "rector/rector": "0.11.36",
+        "phpunit/phpunit": "^9.1",
         "symplify/package-builder": "^9.3"
     },
     "autoload": {
         "psr-4": {
-            "ASchm\\Maintenance\\": "src"
+            "ASchm\\Maintenance\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Utils\\": "../CodeIgniter4/utils/"
         }
     },
     "repositories": [
@@ -39,5 +47,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "analyze": "./vendor/bin/phpstan analyze --verbose",
+        "rect": "./vendor/bin/rector process --clear-cache",
+        "style": "./vendor/bin/php-cs-fixer fix --ansi --verbose --using-cache=no"
+    }
 }
