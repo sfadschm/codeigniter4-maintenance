@@ -1,8 +1,18 @@
 <?php
 
+/**
+ * This file is part of ASchm Maintenance.
+ *
+ * (c) 2021 Alexander Schmitz
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace ASchm\Maintenance\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\I18n\Time;
 use Myth\Auth\Controllers\AuthController;
 
@@ -13,11 +23,10 @@ use Myth\Auth\Controllers\AuthController;
  */
 class MaintenanceController extends Controller
 {
-
     /**
      * The callable maintenance functions.
      *
-     * @var array
+     * @var array<string>
      */
     private array $legalActions = [
         'up',
@@ -28,21 +37,28 @@ class MaintenanceController extends Controller
      * Displays the current maintenance status and allows
      * changing the state.
      *
-     * @return array
+     * @return array<mixed>
      */
     public static function status(): array
     {
+
         // Load config
         $config = config('Maintenance');
 
         // Store offline status
         $data = [
-            'offline' => file_exists($config->filePath),
+            'offline'        => file_exists($config->filePath),
+            'time'           => 0,
+            'allowed_groups' => [],
         ];
 
         // Load maintenance information if down
         if ($data['offline']) {
-            $data = array_merge($data, json_decode(file_get_contents($config->filePath), true));
+            $cache = file_get_contents($config->filePath);
+
+            if ($cache) {
+                $data = array_merge($data, json_decode($cache, true, 512, JSON_THROW_ON_ERROR));
+            }
         }
 
         return $data;
@@ -64,13 +80,17 @@ class MaintenanceController extends Controller
         }
 
         // Load JSON data from maintenance file
-        $data = json_decode(file_get_contents($config->filePath), true);
+        $cache = file_get_contents($config->filePath);
+        $data  = $cache ? json_decode($cache, true, 512, JSON_THROW_ON_ERROR) : [];
 
         // Allow users based on defined groups
         helper('auth');
-        if (logged_in() && array_intersect(user()->getRoles(), $data['allowed_groups']) !== []) {
-            // User is allowed
-            return true;
+        if (logged_in()) {
+            $user = user();
+            if ($user && array_intersect($user->getRoles(), $data['allowed_groups']) !== []) {
+                // User is allowed
+                return true;
+            }
         }
 
         // Set unavailable status code
@@ -85,8 +105,10 @@ class MaintenanceController extends Controller
 
     /**
      * Enables or disables the maintenance mode.
+     *
+     * @return RedirectResponse
      */
-    public function toggle()
+    public function toggle(): RedirectResponse
     {
         // Get POST data
         $action = $this->request->getPost('action');
@@ -119,7 +141,7 @@ class MaintenanceController extends Controller
     /**
      * Enables the maintenane mode.
      *
-     * @param array $allowedGroups
+     * @param array<string> $allowedGroups
      *
      * @return void
      */
@@ -141,7 +163,7 @@ class MaintenanceController extends Controller
         file_put_contents(
             $config->filePath,
             json_encode(
-                ["time" => strtotime(Time::now(app_timezone())), "allowed_groups" => $allowedGroups],
+                ['time' => strtotime(Time::now(app_timezone())), 'allowed_groups' => $allowedGroups],
                 JSON_PRETTY_PRINT
             )
         );
