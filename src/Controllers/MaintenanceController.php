@@ -105,8 +105,6 @@ class MaintenanceController extends Controller
 
     /**
      * Enables or disables the maintenance mode.
-     *
-     * @return RedirectResponse
      */
     public function toggle(): RedirectResponse
     {
@@ -126,8 +124,6 @@ class MaintenanceController extends Controller
 
     /**
      * Disables the maintenance mode.
-     *
-     * @return void
      */
     private static function up(): void
     {
@@ -142,8 +138,6 @@ class MaintenanceController extends Controller
      * Enables the maintenane mode.
      *
      * @param array<string> $allowedGroups
-     *
-     * @return void
      */
     private static function down(array $allowedGroups = []): void
     {
