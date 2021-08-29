@@ -38,10 +38,6 @@ use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
 use Rector\Php71\Rector\List_\ListToArrayDestructRector;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Utils\Rector\PassStrictParameterToFunctionParameterRector;
-use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
-use Utils\Rector\RemoveVarTagFromClassConstantRector;
-use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::PHP_73);
@@ -65,10 +61,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $services->load('Symplify\\PackageBuilder\\', __DIR__ . '/vendor/symplify/package-builder/src');
 
-    $services->set(UnderscoreToCamelCaseVariableNameRector::class);
     $services->set(SimplifyUselessVariableRector::class);
     $services->set(RemoveAlwaysElseRector::class);
-    $services->set(PassStrictParameterToFunctionParameterRector::class);
     $services->set(CountArrayToEmptyArrayComparisonRector::class);
     $services->set(ForToForeachRector::class);
     $services->set(ChangeNestedForeachIfsToEarlyContinueRector::class);
@@ -87,11 +81,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(ChangeArrayPushToArrayAssignRector::class);
     $services->set(UnnecessaryTernaryExpressionRector::class);
     $services->set(RemoveUnusedPrivatePropertyRector::class);
-    $services->set(RemoveErrorSuppressInTryCatchStmtsRector::class);
     $services->set(TernaryToNullCoalescingRector::class);
     $services->set(ListToArrayDestructRector::class);
     $services->set(MoveVariableDeclarationNearReferenceRector::class);
-    $services->set(RemoveVarTagFromClassConstantRector::class);
     $services->set(AddPregQuoteDelimiterRector::class);
     $services->set(SimplifyRegexPatternRector::class);
 };
