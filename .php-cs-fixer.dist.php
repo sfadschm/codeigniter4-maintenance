@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 use CodeIgniter\CodingStandard\CodeIgniter4;
 use Nexus\CsConfig\Factory;
+use Nexus\CsConfig\Fixer\Comment\SpaceAfterCommentStartFixer;
+use Nexus\CsConfig\FixerGenerator;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
@@ -24,8 +26,12 @@ $finder = Finder::create()
 $overrides = [];
 
 $options = [
-    'finder'    => $finder,
-    'cacheFile' => 'build/.php-cs-fixer.cache',
+    'cacheFile'    => 'build/.php-cs-fixer.cache',
+    'finder'       => $finder,
+    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
+    'customRules'  => [
+        SpaceAfterCommentStartFixer::name() => true,
+    ],
 ];
 
 return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
